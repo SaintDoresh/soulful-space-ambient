@@ -1,0 +1,432 @@
+body {
+    background-color: #191930;
+    color: #e1e1e6;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    transition: background-color 4s ease;
+    background-image: radial-gradient(circle at 50% 50%, #252545 0%, #191930 100%);
+    /* Add overflow: hidden; if stars go outside viewport */
+    overflow: hidden; 
+}
+
+.container {
+    background-color: rgba(30, 30, 50, 0.75);
+    border-radius: 15px;
+    padding: 25px;
+    width: 90%;
+    max-width: 950px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative; /* Ensure container is above stars */
+    z-index: 1;
+}
+
+h1 {
+    margin-top: 0;
+    background: linear-gradient(to right, #a472f5, #6e8eff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 600;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    color: #a0a0d0;
+    margin-bottom: 25px;
+    font-weight: 300;
+    font-style: italic;
+}
+
+button {
+    background: linear-gradient(to right, #a472f5, #6e8eff);
+    color: white;
+    border: none;
+    padding: 13px 28px;
+    margin: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(110, 142, 255, 0.4);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(110, 142, 255, 0.6);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+button:disabled {
+    background: #4a4a65;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.controls {
+    margin: 25px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.controls-column {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.slider-container {
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    margin-bottom: 10px;
+    color: #a0a0d0;
+    font-weight: 300;
+}
+
+.slider {
+    width: 85%;
+    -webkit-appearance: none;
+    height: 6px;
+    background: #2c2c45;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer; /* Add cursor pointer for usability */
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(to bottom right, #a472f5, #6e8eff);
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 0 10px rgba(110, 142, 255, 0.4);
+}
+
+.slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(110, 142, 255, 0.6);
+}
+
+/* Styles for Firefox */
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(to bottom right, #a472f5, #6e8eff);
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 0 10px rgba(110, 142, 255, 0.4);
+    border: none; /* Remove default border */
+}
+
+.slider::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(110, 142, 255, 0.6);
+}
+
+.slider::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: #2c2c45;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
+#status {
+    margin-top: 20px;
+    font-style: italic;
+    color: #a0a0d0;
+    font-weight: 300;
+}
+
+.visualizer-container {
+    position: relative;
+    height: 80px;
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.visualizer {
+    display: flex;
+    align-items: center; /* Align bars to the bottom */
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    height: 100%;
+}
+
+.bar {
+    width: 4px;
+    height: 3px;
+    background: linear-gradient(to top, #a472f5, #6e8eff);
+    border-radius: 2px;
+    transition: height 0.1s ease; /* Faster transition for responsiveness */
+    align-self: flex-end; /* Align bars to the bottom */
+}
+
+.glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 40px;
+    background: radial-gradient(ellipse at center, rgba(110, 142, 255, 0.15) 0%, rgba(110, 142, 255, 0) 70%);
+    border-radius: 50%;
+    filter: blur(8px);
+    z-index: -1;
+    transition: all 0.2s ease; /* Add transition for glow effect */
+}
+
+/* Star background animation */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: float 8s infinite ease-in-out;
+    z-index: 0; /* Ensure stars are behind the container */
+}
+
+/* Styles for New Parameter Controls */
+.control-group {
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.control-group label {
+    margin-bottom: 8px;
+}
+
+.select-control {
+    background-color: #2c2c45;
+    color: #e1e1e6;
+    border: 1px solid #4a4a65;
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin-top: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    min-width: 150px; /* Give dropdown a minimum width */
+    text-align: center;
+}
+
+.select-control:focus {
+    outline: none;
+    border-color: #6e8eff;
+    box-shadow: 0 0 5px rgba(110, 142, 255, 0.5);
+}
+
+/* Ensure sliders within control groups take appropriate width */
+.control-group .slider-container {
+    width: 100%;
+    margin: 12px 0; /* Adjust margin for grouped sliders */
+}
+
+.control-group .slider {
+    width: 100%; /* Make sliders fill the group width */
+}
+
+/* Add space below the slider value text */
+.control-group .slider-container span {
+    margin-top: 8px;
+}
+
+/* Styles for Toggle Switch */
+.toggle-group {
+  flex-direction: row; /* Align label and switch horizontally */
+  justify-content: center;
+  align-items: center;
+  gap: 15px; /* Space between label and switch */
+  margin-top: 25px; /* Add some top margin */
+}
+
+/* Ensure label in toggle group is styled appropriately */
+.toggle-group label:first-of-type {
+    margin-bottom: 0; /* Remove bottom margin for the text label */
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px; /* Width of the switch */
+  height: 24px; /* Height of the switch */
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider part of the toggle */
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #4a4a65; /* Background color when OFF */
+  transition: .4s; /* Animation speed */
+}
+
+/* The knob/circle inside the slider */
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px; /* Height of the knob */
+  width: 18px;  /* Width of the knob */
+  left: 3px;    /* Position from left when OFF */
+  bottom: 3px;  /* Position from bottom */
+  background-color: white; /* Knob color */
+  transition: .4s; /* Animation speed */
+}
+
+/* Change background color when checked (ON) */
+input:checked + .toggle-slider {
+  background: linear-gradient(to right, #a472f5, #6e8eff); /* Use theme gradient */
+}
+
+/* Add a subtle focus ring */
+input:focus + .toggle-slider {
+  box-shadow: 0 0 1px #6e8eff;
+}
+
+/* Move the knob to the right when checked (ON) */
+input:checked + .toggle-slider:before {
+  transform: translateX(26px); /* Distance to move the knob */
+}
+
+/* Rounded sliders */
+.toggle-slider.round {
+  border-radius: 24px; /* Make the track rounded */
+}
+
+.toggle-slider.round:before {
+  border-radius: 50%; /* Make the knob circular */
+}
+
+/* Styles for Preset Manager */
+.preset-manager {
+   margin-top: 15px;
+   padding-top: 15px;
+   border-top: 1px solid rgba(255, 255, 255, 0.1);
+   width: 100%;
+}
+
+.preset-title {
+    color: #a0a0d0;
+    font-weight: 400;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.preset-save,
+.preset-load {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.preset-input {
+    flex-grow: 1;
+    min-width: 120px; /* Min width before wrapping */
+    max-width: 200px;
+    padding: 8px 10px;
+    background-color: #1f1f38;
+    border: 1px solid #4a4a65;
+    border-radius: 5px;
+    color: #e1e1e6;
+    font-size: 0.9rem;
+}
+
+.preset-input:focus {
+    outline: none;
+    border-color: #6e8eff;
+}
+
+.preset-button {
+    padding: 8px 18px;
+    font-size: 0.9rem;
+    margin: 0;
+    flex-shrink: 0; /* Prevent buttons from shrinking too much */
+}
+
+.preset-select {
+    flex-grow: 1;
+    min-width: 120px;
+    max-width: 200px;
+    margin: 0;
+    text-align-last: center;
+    /* Inherit select styles from .select-control defined earlier */
+}
+
+.preset-delete {
+   background: linear-gradient(to right, #e74c3c, #c0392b); /* Red gradient */
+   box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+}
+
+.preset-delete:hover {
+   box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+}
+
+/* Adjust spacing within the load section */
+.preset-load .preset-button {
+    margin-left: 5px;
+}
+.preset-load .preset-button:first-of-type {
+    margin-left: 0; /* No extra margin on first button */
+}
+
+/* Specific group for play/pause buttons */
+.button-group {
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+}
