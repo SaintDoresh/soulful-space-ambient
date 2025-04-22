@@ -6,6 +6,8 @@
 
 A simple web-based ambient music generator built with React and the Web Audio API, inspired by emotional, atmospheric background music.
 
+Read more about the creation of this project in my Medium article: [Creating Emotional Soundscapes with Web Audio API](https://medium.com/@saintdoresh/creating-emotional-soundscapes-with-web-audio-api-4bd9a011c22b)
+
 ## Features
 
 *   **Generative Ambient Music:** Creates a continuous, non-repetitive soundscape.
