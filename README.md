@@ -70,11 +70,3 @@ A simple web-based ambient music generator built with React and the Web Audio AP
 *   **Bright & Ethereal:** Pad Sound: `Sine`, Pad Filter: `3000-5000 Hz`, Chord Speed: `10-15 seconds`, Heartbeat: `Off`, Arpeggio: `On`.
 *   **Dark & Rhythmic:** Pad Sound: `Square` or `Sawtooth`, Pad Filter: `500-1000 Hz`, Chord Speed: `15-25 seconds`, Heartbeat: `On`, Arpeggio: `Off`.
 *   **Active & Flowing:** Pad Sound: `Triangle`, Pad Filter: `2000-4000 Hz`, Chord Speed: `8-12 seconds`, Heartbeat: `On`, Arpeggio: `On`.
-
-## Future Ideas
-
-*   More visual customization options (colors, themes, visualizer styles).
-*   Additional sound generation parameters or effects (e.g., reverb, delay variations).
-*   Export presets to a file (for sharing/backup).
-*   Import presets from a file.
-*   Audio export (potentially WAV/MP3 via `MediaRecorder` or `OfflineAudioContext`).
